@@ -1068,3 +1068,116 @@ body.roast-active .response-container.active {
   }
 }
 
+/* ==========================================================================
+   MOBILE PORTRAIT OPTIMIZATION (SCROLL ALLOWED, COMPACT WIDTH)
+   ========================================================================== */
+@media (max-width: 600px) {
+  body {
+    padding: 1.5rem 1rem;
+  }
+  
+  .title-script {
+    font-size: 3.5rem;
+    margin-left: 0;
+    margin-bottom: -0.5rem;
+    transform: rotate(-4deg);
+  }
+  
+  h1#app-title {
+    font-size: 2.2rem;
+    letter-spacing: -1px;
+  }
+  
+  .title-sub {
+    font-size: 0.95rem;
+  }
+  
+  .app-container {
+    gap: 1.8rem;
+    margin-top: 0.5rem;
+  }
+  
+  .glass-panel {
+    padding: 1.5rem 1.1rem;
+    border-radius: 4px;
+  }
+  
+  .glass-panel::before {
+    width: 90px;
+    height: 24px;
+    top: -12px;
+  }
+  
+  .settings-bar {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+  }
+  
+  .stage {
+    flex-direction: column; /* Stack vertically on mobile! */
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: auto;
+    padding: 1.8rem 1rem;
+  }
+  
+  .stage::after {
+    bottom: 6px;
+    font-size: 0.55rem;
+  }
+  
+  .cat-avatar {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 0px;
+  }
+  
+  .orb-wrapper {
+    width: 150px;
+    height: 150px;
+    margin-top: -10px; /* pull closer to cat */
+  }
+  
+  .orb-svg {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .pedestal {
+    width: 85px;
+    height: 14px;
+    bottom: 5px;
+  }
+  
+  .input-form {
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+  
+  .question-input {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+  
+  .submit-btn {
+    padding: 0.9rem;
+    font-size: 1rem;
+  }
+  
+  .response-container {
+    padding: 1.2rem 1rem;
+    min-height: 100px;
+  }
+  
+  .response-text {
+    font-size: 1rem;
+  }
+  
+  .history-item {
+    padding: 0.9rem;
+  }
+}
+
+

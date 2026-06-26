@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Existential Magic 8-Ball 🎱 | Scrapbook Edition</title>
+  <meta name="description" content="Ask the Wise Cat. Choose between Philosophical, Judgmental Cat, Ancient Wizard, and Chandler Bing modes. Y2K Scrapbook edition.">
+  
+  <!-- Google Fonts for Scrapbook / Collage Aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Pinyon+Script&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="styles.css?v=1.6">
+  
+  <!-- Global Error Diagnostic for debugging -->
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      const errDiv = document.createElement('div');
+      errDiv.style.position = 'fixed';
+      errDiv.style.top = '15px';
+      errDiv.style.left = '50%';
+      errDiv.style.transform = 'translateX(-50%) rotate(-1deg)';
+      errDiv.style.background = '#601420';
+      errDiv.style.color = '#FAF8F5';
+      errDiv.style.border = '2px solid #FAF8F5';
+      errDiv.style.boxShadow = '4px 4px 0px #000';
+      errDiv.style.padding = '12px 20px';
+      errDiv.style.zIndex = '99999';
+      errDiv.style.fontFamily = 'monospace';
+      errDiv.style.fontSize = '12px';
+      errDiv.style.maxWidth = '90%';
+      errDiv.style.wordBreak = 'break-word';
+      errDiv.innerHTML = '<strong>Cosmic Error:</strong> ' + message + '<br><small>Location: ' + source + ':' + lineno + '</small>';
+      document.body.appendChild(errDiv);
+      return false;
+    };
+  </script>
+</head>
+<body>
+
+  <!-- Floating Stars Background -->
+  <div id="stars-container"></div>
+
+  <!-- Header Title (Collage / Scrapbook Script Style) -->
+  <header>
+    <div class="header-title-wrapper">
+      <span class="title-script">Existential</span>
+      <h1 id="app-title">Magic 8-Ball</h1>
+    </div>
+    <p class="title-sub">Consult the Orb of Sarcastic Wisdom</p>
+  </header>
+
+  <!-- Main App Layout -->
+  <main class="app-container">
+
+    <!-- Left Column: Core Magic 8-Ball Interface -->
+    <section class="glass-panel main-panel">
+      
+      <!-- Toolbar: Selectors & Settings -->
+      <div class="settings-bar">
+        
+        <!-- Personality Selection -->
+        <div class="personality-selector">
+          <span class="selector-label">Choose Personality Mode</span>
+          <div class="tabs-wrapper" role="tablist">
+            <button id="btn-philosophy" class="tab-btn active" role="tab" aria-selected="true" data-persona="philosophical">
+              <span class="emoji">🌌</span>
+              <span>Philosophical</span>
+            </button>
+            <button id="btn-cat" class="tab-btn" role="tab" aria-selected="false" data-persona="cat">
+              <span class="emoji">😼</span>
+              <span>Wise Cat</span>
+            </button>
+            <button id="btn-wizard" class="tab-btn" role="tab" aria-selected="false" data-persona="wizard">
+              <span class="emoji">🧙</span>
+              <span>Wizard</span>
+            </button>
+            <button id="btn-chandler" class="tab-btn" role="tab" aria-selected="false" data-persona="chandler">
+              <span class="emoji">🎭</span>
+              <span>Chandler</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Global Option Toggles -->
+        <div class="toggles-group">
+          <!-- Sound Toggle -->
+          <div id="sound-toggle" class="switch-container active" aria-label="Toggle Sound Effects">
+            <span class="switch-label">🎶 Synth Sound</span>
+            <div class="switch-track">
+              <div class="switch-thumb"></div>
+            </div>
+          </div>
+
+          <!-- Roast Mode Toggle -->
+          <div id="roast-toggle" class="switch-container" aria-label="Toggle Roast Mode">
+            <span class="switch-label">💀 Roast Mode</span>
+            <div class="switch-track">
+              <div class="switch-thumb"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Interactive Stage: Cat and Crystal Ball -->
+      <div class="stage">
+        
+        <!-- The Wise Cat SVG -->
+        <svg id="wise-cat" class="cat-avatar" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Wise Cat Avatar">
+          <!-- Tail -->
+          <path class="cat-tail" d="M30 75 C 20 85, 10 75, 15 60 C 20 45, 8 35, 12 30" fill="none" stroke="var(--cat-body-shadow, #1A103C)" stroke-width="5" stroke-linecap="round" />
+          <!-- Body -->
+          <ellipse cx="50" cy="72" rx="24" ry="18" fill="var(--cat-body-shadow, #1A103C)" />
+          <!-- Chest fluff (front paws/chest detail) -->
+          <path d="M43 72 Q 50 82, 57 72" fill="none" stroke="var(--cat-details, #5E4B8C)" stroke-width="2" />
+          <!-- Ears -->
+          <polygon class="cat-ear-l" points="33,40 20,12 43,28" fill="var(--cat-body-shadow, #1A103C)" />
+          <polygon class="cat-ear-r" points="67,40 80,12 57,28" fill="var(--cat-body-shadow, #1A103C)" />
+          <polygon class="cat-ear-l" points="33,35 25,18 39,27" fill="#FFA5A5" opacity="0.8" />
+          <polygon class="cat-ear-r" points="67,35 75,18 61,27" fill="#FFA5A5" opacity="0.8" />
+          <!-- Head -->
+          <circle cx="50" cy="46" r="20" fill="var(--cat-body, #2E1C60)" />
+          <!-- Eyes -->
+          <ellipse class="cat-eye" cx="42" cy="44" rx="4.5" ry="5.5" fill="var(--cat-eye-color, #39FF14)" />
+          <ellipse class="cat-eye" cx="58" cy="44" rx="4.5" ry="5.5" fill="var(--cat-eye-color, #39FF14)" />
+          <ellipse class="cat-eye" cx="42" cy="44" rx="1.5" ry="4" fill="var(--cat-eye-pupil, #0E1214)" />
+          <ellipse class="cat-eye" cx="58" cy="44" rx="1.5" ry="4" fill="var(--cat-eye-pupil, #0E1214)" />
+          <ellipse cx="40.5" cy="42" rx="1.2" ry="1.2" fill="#FFFFFF" />
+          <ellipse cx="56.5" cy="42" rx="1.2" ry="1.2" fill="#FFFFFF" />
+          <!-- Nose -->
+          <polygon points="50,51 47,48 53,48" fill="#FFA5A5" />
+          <!-- Snout & Mouth -->
+          <path d="M47 53 Q 50 56, 50 53 Q 50 56, 53 53" fill="none" stroke="var(--cat-details, #5E4B8C)" stroke-width="1.8" stroke-linecap="round" />
+          <!-- Whiskers -->
+          <line x1="35" y1="51" x2="20" y2="48" stroke="var(--cat-details, #5E4B8C)" stroke-width="1.5" stroke-linecap="round" />
+          <line x1="35" y1="54" x2="18" y2="55" stroke="var(--cat-details, #5E4B8C)" stroke-width="1.5" stroke-linecap="round" />
+          <line x1="65" y1="51" x2="80" y2="48" stroke="var(--cat-details, #5E4B8C)" stroke-width="1.5" stroke-linecap="round" />
+          <line x1="65" y1="54" x2="82" y2="55" stroke="var(--cat-details, #5E4B8C)" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+
+        <!-- Orb Container -->
+        <div class="orb-wrapper">
+          <!-- The Glowing Crystal Ball -->
+          <svg id="crystal-ball" class="orb-svg" viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg" aria-label="Crystal Ball">
+            <defs>
+              <!-- Radial gradient inside the orb -->
+              <radialGradient id="orb-glow" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+                <stop offset="0%" stop-color="var(--orb-stop-1, hsl(280, 100%, 85%))" />
+                <stop offset="25%" stop-color="var(--orb-stop-2, hsl(280, 90%, 65%))" />
+                <stop offset="70%" stop-color="var(--orb-stop-3, hsl(260, 80%, 25%))" />
+                <stop offset="100%" stop-color="var(--orb-stop-4, hsl(255, 60%, 7%))" />
+              </radialGradient>
+              <!-- Radial gradient for reflection glare -->
+              <radialGradient id="orb-glare" cx="30%" cy="30%" r="40%">
+                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.45)" />
+                <stop offset="100%" stop-color="rgba(255, 255, 255, 0)" />
+              </radialGradient>
+            </defs>
+
+            <!-- Inner Mist / Swirl Background -->
+            <circle cx="85" cy="85" r="70" fill="url(#orb-glow)" />
+            
+            <!-- Swirling Mist Graphics -->
+            <path id="mist-1" d="M35 85 C 45 60, 125 60, 135 85 C 125 110, 45 110, 35 85 Z" fill="rgba(0, 240, 255, 0.12)" filter="blur(8px)" opacity="0.75" />
+            <path id="mist-2" d="M50 85 C 60 70, 110 70, 120 85 C 110 100, 60 100, 50 85 Z" fill="rgba(255, 0, 120, 0.1)" filter="blur(6px)" opacity="0.6" />
+
+            <!-- Core Rune (Floating center symbol) -->
+            <g id="orb-rune" opacity="0.65">
+              <circle cx="85" cy="85" r="14" fill="none" stroke="hsl(280, 100%, 80%)" stroke-width="1.5" stroke-dasharray="3,3" />
+              <text x="85" y="90" font-family="'Cinzel', serif" font-size="16" fill="hsl(280, 100%, 90%)" text-anchor="middle" font-weight="700">8</text>
+            </g>
+
+            <!-- Spherical Glass Highlight Glare -->
+            <circle cx="85" cy="85" r="70" fill="url(#orb-glare)" pointer-events="none" />
+            <circle cx="85" cy="85" r="69.5" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" pointer-events="none" />
+          </svg>
+
+          <!-- Pedestal Stand -->
+          <div class="pedestal"></div>
+        </div>
+
+      </div>
+
+      <!-- Question Input Form -->
+      <form id="question-form" class="input-form">
+        <div class="input-wrapper">
+          <input 
+            type="text" 
+            id="question-input" 
+            class="question-input" 
+            placeholder="Should I study physics?..." 
+            autocomplete="off" 
+            maxlength="150"
+            required
+            aria-label="Type your question here"
+          />
+        </div>
+        <button type="submit" id="submit-btn" class="submit-btn">
+          Consult the Orb 🔮
+        </button>
+      </form>
+
+      <!-- The Answer & Loading Container -->
+      <div id="response-container" class="response-container">
+        
+        <!-- Loader Display (shown during consultation) -->
+        <div id="response-loader" class="response-loader" style="display: none;">
+          <div class="console-line">
+            <div class="console-spinner"></div>
+            <span id="console-message">Tuning alignment of the universe...</span>
+          </div>
+          <div class="meter-wrapper" id="confidence-meter-container">
+            <div class="meter-title">
+              <span>Cosmic Confidence</span>
+              <span id="confidence-value">0%</span>
+            </div>
+            <div class="meter-bar">
+              <div id="confidence-fill" class="meter-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Answer Display (shown before/after consultation) -->
+        <div id="response-content" class="response-content">
+          <span class="response-title" id="response-header">The Orb has spoken</span>
+          <p id="response-text" class="response-text response-placeholder">Type your question above and peer into the void...</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Right Column: Memory Sidebar -->
+    <aside class="glass-panel sidebar-panel">
+      <div class="sidebar-title-row">
+        <h2>📝 Questions Asked Today</h2>
+        <button id="clear-history-btn" class="clear-btn" aria-label="Clear Question History">
+          🗑️ Clear
+        </button>
+      </div>
+      
+      <!-- History List -->
+      <ul id="history-list" class="history-list">
+        <!-- Dynmically loaded via JavaScript -->
+        <li class="history-empty-state">No questions asked yet today. Don't be shy.</li>
+      </ul>
+    </aside>
+
+  </main>
+
+  <!-- Footer Info -->
+  <footer>
+    <p>Existential Magic 8-Ball &copy; 2026. Made with sarcasm. Touch grass.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="audio.js?v=1.5"></script>
+  <script src="app.js?v=1.5"></script>
+</body>
+</html>

@@ -344,7 +344,34 @@ function escapeHtml(str) {
             .replace(/'/g, "&#039;");
 }
 
-// 11. Form Submission & Orb Consultation
+// 11. Dynamic Answer Fetcher
+async function fetchDynamicAnswer(question, mode, isRoast) {
+  try {
+    const res = await fetch("/api/answer", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, mode, isRoast }),
+    });
+    
+    if (!res.ok) {
+      throw new Error(`API error: ${res.statusText}`);
+    }
+    
+    const data = await res.json();
+    if (data && data.answer) {
+      return data.answer;
+    }
+    throw new Error("Invalid response format");
+  } catch (err) {
+    console.warn("Vercel API failed or not available, falling back to local oracle:", err);
+    // Local fallback
+    const answerPool = isRoast ? RESPONSES[mode].roast : RESPONSES[mode].normal;
+    const randomIndex = Math.floor(Math.random() * answerPool.length);
+    return answerPool[randomIndex];
+  }
+}
+
+// 12. Form Submission & Orb Consultation
 questionForm.addEventListener('submit', (e) => {
   try {
     e.preventDefault();
@@ -354,6 +381,9 @@ questionForm.addEventListener('submit', (e) => {
     // Check if already running
     if (isConsulting) return;
     isConsulting = true;
+
+    // Start pre-fetching the dynamic answer in parallel
+    const answerPromise = fetchDynamicAnswer(question, currentPersona, roastMode);
 
     // Initialize audio context on first user consultation if needed
     try {
@@ -434,8 +464,11 @@ questionForm.addEventListener('submit', (e) => {
     }, 1000);
     
     // Step 4: Finalize & Reveal after 2000ms
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
+        // Await the API response (will resolve immediately if fetch took < 2000ms)
+        const chosenAnswer = await answerPromise;
+
         // Stop animations
         crystalBall.classList.remove('shaking');
         starsContainer.style.animation = '';
@@ -449,11 +482,6 @@ questionForm.addEventListener('submit', (e) => {
         try {
           window.OrbAudio.playSuccess();
         } catch (err) {}
-        
-        // Select answer
-        const answerPool = roastMode ? RESPONSES[currentPersona].roast : RESPONSES[currentPersona].normal;
-        const randomIndex = Math.floor(Math.random() * answerPool.length);
-        const chosenAnswer = answerPool[randomIndex];
         
         // Display result
         responseHeader.textContent = getResponseHeader();
